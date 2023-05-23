@@ -14,6 +14,7 @@ app.use(express.static("public"));
 const server = require("http").createServer(app);
 
 const cors = require("cors");
+
 app.use(
   cors({
     origin: "*",
@@ -23,24 +24,11 @@ app.use(
 
 //Directorio público para establecer clientes
 const io = require("socket.io")(server);
+const { socketController } = require("./sockets/socket.controller");
 
 //MANEJO DE EVENTOS del lado del servidor
 //Se activa cada vez que un cliente se conecta al servidor
-io.on("connection", (cliente) => {
-  console.log("cliente conectado", cliente.id);
-
-  //Se activa cada vez que un cliente se desconecta del servidor
-  cliente.on("disconnect", () => {
-    console.log("Cliente desconectado");
-  });
-
-  //Se activa cada vez que el cliente envíe un mensaje con el nombre enviar mensaje
-  //El payload son los datos enviados por el cliente
-  cliente.on("enviar-mensaje", (payload) => {
-    console.log("En el server desde el front", payload);
-    cliente.broadcast.emit("enviar-mensaje", payload);
-  });
-});
+io.on("connection", socketController);
 
 server.listen(PORT, () => {
   console.log(`Listening on PORT ${BASE_URL}${PORT}`);

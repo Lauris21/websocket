@@ -32,7 +32,7 @@ const pOffline = document.querySelector(".pOffline");
 // Este IO conecta con el script
 const socket = io();
 
-// Escuchadores del cliente
+// Escuchadores del cliente -> Reciben evento
 socket.on("connect", () => {
   pOnline.style.display = "block";
   pOffline.style.display = "none";
@@ -43,7 +43,7 @@ socket.on("disconnect", () => {
   pOffline.style.display = "block";
 });
 
-//Escuchados del evento enviar mensaje
+//Escuchador del evento enviar mensaje --> clientes reciben evento
 socket.on("enviar-mensaje", (payload) => {
   console.log("En el front", payload);
 });
@@ -57,8 +57,9 @@ btnEnviar.addEventListener("click", () => {
     fecha: new Date().getTime(),
   };
 
-  // Cuando envia mensaje
+  // Emitimos el evento
   socket.emit("enviar-mensaje", payload, (id) => {
-    console.log("Desde el server", id);
+    //Se ejecuta al insertar el callback en el controller
+    console.log("Desde el server", payload);
   });
 });
