@@ -60,6 +60,6 @@ btnEnviar.addEventListener("click", () => {
   // Emitimos el evento
   socket.emit("enviar-mensaje", payload, (id) => {
     //Se ejecuta al insertar el callback en el controller
-    console.log("Desde el server", payload);
+    console.log("Desde el server", id);
   });
 });
