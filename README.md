@@ -1,0 +1,1 @@
+Para ejecutar el proyecto necesita ejecutar en la terminal npm i
